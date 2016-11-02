@@ -43,9 +43,10 @@ public class Problem7 {
 	}
 
 	private static boolean isPrime(long i) {
+		double sqrt = Math.sqrt(i);
 		for ( long l : primes) {
 			if ( i % l == 0 ) return false;
-			if ( l > Math.sqrt(i) ) break; // 제곱근 범위 까지만 체크.
+			if ( l > sqrt ) break; // 제곱근 범위 까지만 체크.
 		}
 		primes.add(i);
 		System.out.println(primes.size() + " => " + i);
