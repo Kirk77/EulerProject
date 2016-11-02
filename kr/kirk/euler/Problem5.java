@@ -3,9 +3,9 @@ package kr.kirk.euler;
 
 /*
 
-1 ~ 10 »çÀÌÀÇ ¾î¶² ¼ö·Îµµ ³ª´©¾î ¶³¾îÁö´Â °¡Àå ÀÛÀº ¼ö´Â 2520ÀÔ´Ï´Ù.
+1 ~ 10 ì‚¬ì´ì˜ ì–´ë–¤ ìˆ˜ë¡œë„ ë‚˜ëˆ„ì–´ ë–¨ì–´ì§€ëŠ” ê°€ìž¥ ìž‘ì€ ìˆ˜ëŠ” 2520ìž…ë‹ˆë‹¤.
 
-±×·¯¸é 1 ~ 20 »çÀÌÀÇ ¾î¶² ¼ö·Îµµ ³ª´©¾î ¶³¾îÁö´Â °¡Àå ÀÛÀº ¼ö´Â ¾ó¸¶ÀÔ´Ï±î?	
+ê·¸ëŸ¬ë©´ 1 ~ 20 ì‚¬ì´ì˜ ì–´ë–¤ ìˆ˜ë¡œë„ ë‚˜ëˆ„ì–´ ë–¨ì–´ì§€ëŠ” ê°€ìž¥ ìž‘ì€ ìˆ˜ëŠ” ì–¼ë§ˆìž…ë‹ˆê¹Œ?	
 */
 
 public class Problem5 {
@@ -32,7 +32,7 @@ public class Problem5 {
 		return x;
 	}
 
-	// ÃÖ¼Ò°ø¹è¼ö
+	// ìµœì†Œê³µë°°ìˆ˜
 	private static long lcm(long x, long i) {
 		
 		if ( x == i ) return x;

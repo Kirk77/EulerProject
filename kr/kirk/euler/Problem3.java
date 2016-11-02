@@ -6,10 +6,10 @@ import java.util.List;
 
 /*
 
-¾î¶² ¼ö¸¦ ¼Ò¼öÀÇ °öÀ¸·Î¸¸ ³ªÅ¸³»´Â °ÍÀ» ¼ÒÀÎ¼öºÐÇØ¶ó ÇÏ°í, ÀÌ ¼Ò¼öµéÀ» ±× ¼öÀÇ ¼ÒÀÎ¼ö¶ó°í ÇÕ´Ï´Ù.
-¿¹¸¦ µé¸é 13195ÀÇ ¼ÒÀÎ¼ö´Â 5, 7, 13, 29 ÀÔ´Ï´Ù.
+ì–´ë–¤ ìˆ˜ë¥¼ ì†Œìˆ˜ì˜ ê³±ìœ¼ë¡œë§Œ ë‚˜íƒ€ë‚´ëŠ” ê²ƒì„ ì†Œì¸ìˆ˜ë¶„í•´ë¼ í•˜ê³ , ì´ ì†Œìˆ˜ë“¤ì„ ê·¸ ìˆ˜ì˜ ì†Œì¸ìˆ˜ë¼ê³  í•©ë‹ˆë‹¤.
+ì˜ˆë¥¼ ë“¤ë©´ 13195ì˜ ì†Œì¸ìˆ˜ëŠ” 5, 7, 13, 29 ìž…ë‹ˆë‹¤.
 
-600851475143ÀÇ ¼ÒÀÎ¼ö Áß¿¡¼­ °¡Àå Å« ¼ö¸¦ ±¸ÇÏ¼¼¿ä.
+600851475143ì˜ ì†Œì¸ìˆ˜ ì¤‘ì—ì„œ ê°€ìž¥ í° ìˆ˜ë¥¼ êµ¬í•˜ì„¸ìš”.
 
  */
 public class Problem3 {
@@ -28,8 +28,6 @@ public class Problem3 {
 		for ( long i = 2; i<=d; ++i) {
 			
 			if ( isPrime(i) ) {
-				i = p.get(p.size()-1);
-				
 				if ( d % i == 0 ) {
 					p2.add(i);
 					if (isOver(d)) {
