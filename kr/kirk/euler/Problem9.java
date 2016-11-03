@@ -1,8 +1,5 @@
 package kr.kirk.euler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /*
 세 자연수 a, b, c 가 피타고라스 정리 a2 + b2 = c2 를 만족하면 피타고라스 수라고 부릅니다 (여기서 a < b < c ).
@@ -12,8 +9,6 @@ a + b + c = 1000 인 피타고라스 수 a, b, c는 한 가지 뿐입니다. 이
 */
 
 public class Problem9 {
-
-	static List<Long> primes = new ArrayList<Long>();
 		
 	public static void main(String[] args) {
 
@@ -22,8 +17,22 @@ public class Problem9 {
 		System.out.println("========================================================");
 	}
 
-	private static char[] solution(int i) {
-		return null;
+	private static long solution(long d) {
+		
+		for ( long i=1; i<d; ++i) {
+			
+			for ( long j=i+1; j<d-i; ++j) {
+				
+				long k = d - i - j;
+					
+				if ( k*k == i*i + j*j ) {
+						System.out.println(i + ", " + j + ", " + k);
+						return i*j*k;
+				}
+			}
+		}
+		
+		return -1;
 	}
 
 	
