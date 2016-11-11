@@ -24,7 +24,7 @@ public class Problem19 {
 	
 	public enum Day {
 		
-		MON(0), TUE(1), WED(2), THU(3), FRI(4), SAT(5), SUN(6);
+		MON(1), TUE(2), WED(3), THU(4), FRI(5), SAT(6), SUN(0);
 		
 		private int day;
 		
@@ -34,19 +34,19 @@ public class Problem19 {
 		
 		public static Day getDay(int i) {
 			switch (i) {
-				case 0: return MON;
-				case 1: return TUE;
-				case 2: return WED;
-				case 3: return THU;
-				case 4: return FRI;
-				case 5: return SAT;
+				case 1: return MON;
+				case 2: return TUE;
+				case 3: return WED;
+				case 4: return THU;
+				case 5: return FRI;
+				case 6: return SAT;
 				default: return SUN;
 			}
 		}
 	}
 	
 	public static void main(String[] args) {
-
+		
 		System.out.println( solution(1901, 2000));
 	}
 
@@ -62,9 +62,48 @@ public class Problem19 {
 		return nCount;
 	}
 
-	private static Day getTheDay(int y, int m, int d) {
+	private static Day getTheDay(int year, int month, int day) {
+		
+		int days = 0;
+		
+		for ( int y=1900; y<year; ++y) {
+			days += isLeapYear(y) ? 366 : 365; 
+		}
+		
+		for ( int m=1; m<month; ++m) {
+			switch(m) {
+			case 4:
+			case 6:
+			case 9:
+			case 11:
+				days += 30;
+				break;
+				
+			case 1:
+			case 3:
+			case 5:
+			case 7:
+			case 8:
+			case 10:
+			case 12:
+				days += 31;
+				break;
+				
+			case 2:
+				days += isLeapYear(year) ? 29 : 28 ;
+				break;
+			}
+		}
+		
+		days += day;
 
-		return Day.SUN;
+		return Day.getDay(days % 7);
 	}
- 
+
+	private static boolean isLeapYear(int y) {
+		if ( y % 400 == 0 ) return true;
+		if ( y % 100 == 0 ) return false;
+		if ( y % 4 == 0 ) return true;
+		return false;
+	} 
 }
