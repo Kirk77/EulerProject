@@ -14,10 +14,10 @@ a, b는 친화쌍이라 하고 a와 b를 각각 친화수(우애수)라고 합�
 10000 이하의 친화수들을 모두 찾아서 그 합을 구하세요.
  */
 
-public class Problem21 {
+public class Problem021 {
 	
 	public static void main(String[] args) {
-		System.out.println(Problem21.solution(10000));
+		System.out.println(Problem021.solution(10000));
 	}
 
 	private static int d(int n) {

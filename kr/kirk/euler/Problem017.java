@@ -11,12 +11,12 @@ package kr.kirk.euler;
   115 = one hundred and fifteen 의 경우에는 20 글자가 됩니다.
  */
 
-public class Problem17 {
+public class Problem017 {
 	
 	public static void main(String[] args) {
 
-		System.out.println(Problem17.solution(1,5));
-		System.out.println(Problem17.solution(1,1000));
+		System.out.println(Problem017.solution(1,5));
+		System.out.println(Problem017.solution(1,1000));
 	}
 
 	private static long solution(int x, int y) {

@@ -26,14 +26,14 @@ import java.util.List;
 그러면 500개 이상의 약수를 갖는 가장 작은 삼각수는 얼마입니까?
  */
 
-public class Problem12 {
+public class Problem012 {
 
 	public static void main(String[] args) {
 		
 		System.out.println("========================================================");
-		System.out.println(Problem12.solution(5));
+		System.out.println(Problem012.solution(5));
 		System.out.println("========================================================");
-		System.out.println(Problem12.solution(500));	
+		System.out.println(Problem012.solution(500));	
 	}
 
 	private static long solution(long d) {

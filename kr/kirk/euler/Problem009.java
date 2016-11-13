@@ -8,12 +8,12 @@ package kr.kirk.euler;
 a + b + c = 1000 인 피타고라스 수 a, b, c는 한 가지 뿐입니다. 이 때, a × b × c 는 얼마입니까?
 */
 
-public class Problem9 {
+public class Problem009 {
 		
 	public static void main(String[] args) {
 
 		System.out.println("========================================================");
-		System.out.println(Problem9.solution(1000));
+		System.out.println(Problem009.solution(1000));
 		System.out.println("========================================================");
 	}
 

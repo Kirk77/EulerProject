@@ -34,7 +34,7 @@ package kr.kirk.euler;
 하지만 67번 문제에는 100층짜리 삼각형 배열이 나옵니다. 그런 경우에는 좀 더 현명한 풀이 방법을 찾아야겠지요.
  */
 
-public class Problem18 {
+public class Problem067 {
 	
 	public static void main(String[] args) {
 

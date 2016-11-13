@@ -29,7 +29,7 @@ package kr.kirk.euler;
  그러면 수평, 수직, 또는 대각선 방향으로 연속된 숫자 네 개의 곱 중 최대값은 얼마입니까?
  */
 
-public class Problem11 {
+public class Problem011 {
 
 	public static void main(String[] args) {
 
@@ -60,7 +60,7 @@ public class Problem11 {
 //		System.out.println(Problem11.solution(d, 1));
 //		System.out.println(Problem11.solution(d, 20));
 //		System.out.println(Problem11.solution(d, 21));
-		System.out.println(Problem11.solution(d, 4));
+		System.out.println(Problem011.solution(d, 4));
 	}
 
 	private static long solution(int[][] d, int i) {

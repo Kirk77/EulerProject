@@ -22,7 +22,7 @@ n → 3 n + 1 (n이 홀수일 때)
 참고: 계산 과정 도중에는 숫자가 백만을 넘어가도 괜찮습니다.
  */
 
-public class Problem14 {
+public class Problem014 {
 
 	static Map<Long, Integer> map = new HashMap<Long, Integer>();
 	
@@ -30,8 +30,8 @@ public class Problem14 {
 		
 		
 		System.out.println("========================================================");
-		System.out.println(Problem14.solution(15));
-		System.out.println(Problem14.solution(1000000));
+		System.out.println(Problem014.solution(15));
+		System.out.println(Problem014.solution(1000000));
 	}
 
 	private static long solution(long d) {

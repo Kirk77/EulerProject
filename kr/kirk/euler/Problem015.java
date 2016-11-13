@@ -7,13 +7,13 @@ package kr.kirk.euler;
 그러면 20 × 20 격자에는 모두 몇 개의 경로가 있습니까?
  */
 
-public class Problem15 {
+public class Problem015 {
 	
 	public static void main(String[] args) {
 
-		System.out.println(Problem15.solution(2,2));
-		System.out.println(Problem15.solution(20,20));
-		System.out.println(Problem15.solution(25,25));
+		System.out.println(Problem015.solution(2,2));
+		System.out.println(Problem015.solution(20,20));
+		System.out.println(Problem015.solution(25,25));
 	}
 
 	private static long solution(int x, int y) {

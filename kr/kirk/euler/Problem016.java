@@ -8,12 +8,12 @@ import java.math.BigInteger;
 2^1000의 각 자리수를 모두 더하면 얼마입니까?
  */
 
-public class Problem16 {
+public class Problem016 {
 	
 	public static void main(String[] args) {
 
-		System.out.println(Problem16.solution(2,15));
-		System.out.println(Problem16.solution(2,1000));
+		System.out.println(Problem016.solution(2,15));
+		System.out.println(Problem016.solution(2,1000));
 	}
 
 	private static long solution(int x, int y) {

@@ -11,16 +11,20 @@ import java.util.List;
 
 600851475143의 소인수 중에서 가장 큰 수를 구하세요.
 
+
+The prime factors of 13195 are 5, 7, 13 and 29.
+
+What is the largest prime factor of the number 600851475143 ?
  */
-public class Problem3 {
+public class Problem003 {
 
 	static List<Long> primes = new ArrayList<Long>();
 	static List<Long> p2 = new ArrayList<Long>();
 	
 	public static void main(String[] args) {
 
-		System.out.println(Problem3.solution(13195L));
-		System.out.println(Problem3.solution(600851475143L));
+		System.out.println(Problem003.solution(13195L));
+		System.out.println(Problem003.solution(600851475143L));
 
 	}
 

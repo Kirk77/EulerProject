@@ -20,7 +20,7 @@ package kr.kirk.euler;
 
 
  */
-public class Problem19 {
+public class Problem019 {
 	
 	public enum Day {
 		

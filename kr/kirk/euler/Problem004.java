@@ -8,17 +8,22 @@ package kr.kirk.euler;
 두 자리 수를 곱해 만들 수 있는 대칭수 중 가장 큰 수는 9009 (= 91 × 99) 입니다.
 
 세 자리 수를 곱해 만들 수 있는 가장 큰 대칭수는 얼마입니까?		
+
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+
 */
 
-public class Problem4 {
+public class Problem004 {
 
 		
 	public static void main(String[] args) {
 
 		System.out.println("========================================================");
-		System.out.println(Problem4.solution(2));
+		System.out.println(Problem004.solution(2));
 		System.out.println("========================================================");
-		System.out.println(Problem4.solution(3));
+		System.out.println(Problem004.solution(3));
 		System.out.println("========================================================");
 //		System.out.println(Problem4.solution(4));
 	}

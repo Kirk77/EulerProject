@@ -16,7 +16,7 @@ import java.util.Arrays;
 names.txt에 들어있는 모든 이름의 점수를 계산해서 더하면 얼마입니까?
  */
 
-public class Problem22 {
+public class Problem022 {
 
 
 	private static long solution(String[] names) {
@@ -910,6 +910,6 @@ public class Problem22 {
 				"BUCK", "WILLIAN", "VINCENZO", "SHON", "LYNWOOD", "JERE",
 				"HAI", "ELDEN", "DORSEY", "DARELL", "BRODERICK", "ALONSO" };
 		
-		System.out.println(Problem22.solution(names));
+		System.out.println(Problem022.solution(names));
 	}
 }

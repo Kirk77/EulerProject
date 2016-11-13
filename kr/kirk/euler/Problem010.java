@@ -10,16 +10,16 @@ import java.util.List;
 이백만(2,000,000) 이하 소수의 합은 얼마입니까?
 */
 
-public class Problem10 {
+public class Problem010 {
 
 	static List<Long> primes = new ArrayList<Long>();
 		
 	public static void main(String[] args) {
 
 		System.out.println("========================================================");
-		System.out.println(Problem10.solution(10));
+		System.out.println(Problem010.solution(10));
 		System.out.println("========================================================");
-		System.out.println(Problem10.solution(2000000));
+		System.out.println(Problem010.solution(2000000));
 	}
 
 	private static long solution(long d) {

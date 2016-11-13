@@ -106,7 +106,7 @@ package kr.kirk.euler;
     53503534226472524250874054075591789781264330331690 
  */
 
-public class Problem13 {
+public class Problem013 {
 
 	public static void main(String[] args) {
 		String[] t = {
@@ -212,7 +212,7 @@ public class Problem13 {
 				"53503534226472524250874054075591789781264330331690",
 		};
 		System.out.println("========================================================");
-		System.out.println(Problem13.solution(t, 10));
+		System.out.println(Problem013.solution(t, 10));
 	}
 
 	private static String solution(String[] t, int d) {
