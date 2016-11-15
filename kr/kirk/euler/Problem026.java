@@ -1,5 +1,8 @@
 package kr.kirk.euler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /*
 분자가 1인 분수를 단위분수라고 합니다. 분모가 2에서 10까지의 단위분수는 아래와 같습니다.
@@ -38,12 +41,46 @@ Find the value of d < 1000 for which 1/d contains the longest recurring cycle in
 
 public class Problem026 {
 	
+	static Map<Integer, Integer> map = new HashMap<Integer,Integer>();
+	
 	public static void main(String[] args) {
-		System.out.println(Problem026.solution(10));
+//		System.out.println(Problem026.solution(10));
 		System.out.println(Problem026.solution(1000));
 	}
 
-	private static int solution(int x) {
-		return 0;
+	private static String solution(int x) {
+		
+		int z = 0;
+		String r = "";
+		for ( int i=2; i<x; ++i) {
+			String r2 = getRecurringCycle(i);
+			
+			if ( r.length() < r2.length() ) {
+				r = r2;
+				z = i;
+			}
+		}
+		return z + " : " + r;
+	}
+
+	private static String getRecurringCycle(int i) {
+		System.out.print(i + " : ");
+		map.clear();
+		
+		String cycle = "";
+		int d = 0;
+		int r = 10;
+		while (r != 0) {
+			if (i > r) r*= 10;
+			d = r / i;
+			r = r % i;
+					
+			if ( map.get(r) != null ) break;
+			cycle += d;
+			System.out.print(d);
+			map.put(r, r);
+		}
+		System.out.println();
+		return cycle;
 	}
 }
