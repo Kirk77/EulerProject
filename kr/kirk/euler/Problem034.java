@@ -1,7 +1,5 @@
 package kr.kirk.euler;
 
-import java.math.BigInteger;
-
 /*
 
 숫자 145에는 신기한 성질이 있습니다. 각 자릿수의 팩토리얼(계승)을 더하면  1! + 4! + 5! = 1 + 24 + 120 = 145 처럼 자기 자신이 됩니다.
@@ -23,29 +21,54 @@ Note: as 1! = 1 and 2! = 2 are not sums they are not included.
 
 public class Problem034 {
 
+	static long[] digits = {
+		factorial(0),
+		factorial(1),
+		factorial(2),
+		factorial(3),
+		factorial(4),
+		factorial(5),
+		factorial(6),
+		factorial(7),
+		factorial(8),
+		factorial(9),
+	};
+	
+	static int n = 1;
+	static long min = 0;
+	static long max = 0;
+	
 	public static void main(String[] args) {
-		System.out.println(Problem034.solution());
+		System.out.println(Problem034.solution(10));
 	}
 
-	private static BigInteger solution() {
+	private static long solution(long x) {
 		
-		for ( BigInteger i=BigInteger.ONE; i.compareTo(BigInteger.TEN.pow(10)) < 0; i = i.add(BigInteger.ONE)) {
-			BigInteger sf = getSumFactorial(i);
-			if ( i.compareTo(sf) == 0)
-				System.out.println(i + " : " + sf);
+		for (long i=1; i<=x; i++) {
+			min = (long) Math.pow(10, i-1);
+			max = (long) Math.pow(10, i);
+			
+			checkSumFactorials(i, 0);
 		}
-		
-		return BigInteger.ZERO;
+		return -1;
 	}
 	
-	private static BigInteger getSumFactorial(BigInteger i) {
-		if (i.compareTo(BigInteger.ZERO) == 0) return BigInteger.ZERO;
-		return getSumFactorial(i.divide(BigInteger.TEN)).add(factorial(i.remainder(BigInteger.TEN)));
+	private static long checkSumFactorials(long i, long l) {
+		if ( i == 0 ) {
+			if (min <= l && l < max)
+				System.out.println((n++) + " : " + l);
+			return l;
+		}
+		
+		for ( long d : digits ) {
+			checkSumFactorials(i-1, d + l);
+		}
+		return 0;
 	}
 
-	private static BigInteger factorial(BigInteger n) {
-		if ( n.compareTo(BigInteger.ZERO) == 0) return BigInteger.ZERO;
-		if ( n.compareTo(BigInteger.ONE) == 0) return BigInteger.ONE;
-		return n.multiply(factorial(n.add(BigInteger.ONE.negate())));
+	private static long factorial(int n) {
+		if ( n == 0) return 0;
+		if ( n == 1) return 1;
+		return n * factorial(n-1);
 	}
 }
