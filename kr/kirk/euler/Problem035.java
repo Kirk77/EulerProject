@@ -32,10 +32,17 @@ public class Problem035 {
 	}
 
 	private static int solution(int x) {
-		int n = 0;
+		
+		primes.clear();
+		
 		for ( int i=2; i<x; i++) {
-			if (isPrime(i) && isCircularPrime(i)) {
-				System.out.println(i);
+			isPrime(i);
+		}
+		System.out.println("============================");
+		int n = 0;
+		for ( long p : primes) {
+			if(isCircularPrime(p)) {
+				System.out.println(p);
 				n++;
 			}
 		}
