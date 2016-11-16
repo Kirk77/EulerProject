@@ -33,42 +33,34 @@ public class Problem034 {
 		factorial(8),
 		factorial(9),
 	};
-	
-	static int n = 1;
-	static long min = 0;
-	static long max = 0;
-	
+
 	public static void main(String[] args) {
-		System.out.println(Problem034.solution(10));
+		// 아래 출력결과로 최대 7자리 수 2540160 를 최대범위로 판단.
+		// for (long x=1; x<20; x++) System.out.println(x + " : " + digits[9] * x );
+	
+		System.out.println(Problem034.solution(7));
 	}
 
-	private static long solution(long x) {
-		
-		for (long i=1; i<=x; i++) {
-			min = (long) Math.pow(10, i-1);
-			max = (long) Math.pow(10, i);
-			
-			checkSumFactorials(i, 0);
-		}
-		return -1;
+	private static long solution(int x) {
+		long sum = 0;
+//		long limit = (long) Math.pow(10, x);
+		long limit = 2540160 + 1;
+		for ( long i=3; i<limit; i++) {
+			if ( i == getSumFactorial(i)) {
+				sum += i;
+				System.out.println(i);
+			}
+		}		
+		return sum;
+	}
+
+	private static long getSumFactorial(long i) {
+		if (i == 0) return 0;
+		return getSumFactorial(i/10) + digits[(int) (i%10)];
 	}
 	
-	private static long checkSumFactorials(long i, long l) {
-		if ( i == 0 ) {
-			if (min <= l && l < max)
-				System.out.println((n++) + " : " + l);
-			return l;
-		}
-		
-		for ( long d : digits ) {
-			checkSumFactorials(i-1, d + l);
-		}
-		return 0;
-	}
-
-	private static long factorial(int n) {
-		if ( n == 0) return 0;
-		if ( n == 1) return 1;
+	private static long factorial(long n) {
+		if ( n < 2) return 1;
 		return n * factorial(n-1);
 	}
 }
