@@ -1,6 +1,8 @@
 package kr.kirk.euler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /*
@@ -24,12 +26,55 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 
 public class Problem032 {
 
+	static HashSet<Integer> pSet = new HashSet<Integer>();
 	public static void main(String[] args) {
 		System.out.println(Problem032.solution());
 	}
 
 	private static long solution() {
-		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-		return 0;
+		String[] list = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "x", "="};
+//		String[] list = {"1", "2", "3"};
+		pandigitalExpressions("", Arrays.asList(list));
+		
+		long sum = 0;
+		for ( int c : pSet) sum += c;
+		return sum;
 	}
+
+	private static String pandigitalExpressions(String s, List<String> list) {
+		if ( list.size() == 1) return s + list.get(0);
+		
+		for ( int i=0; i<list.size(); ++i) {
+			List<String> subList = copyWithoutOne(list, i);
+			String str = pandigitalExpressions(s + list.get(i), subList);
+			checkExpressions(str);
+		}
+		return "";
+	}
+
+	private static void checkExpressions(String str) {
+		int x = str.indexOf('x');
+		int e = str.indexOf('=');
+		
+		if ( x<1 || e<1 || str.endsWith("=") || str.endsWith("x") || x>e || x - e == 1 || x - e == -1) return;
+		
+		int a = Integer.valueOf(str.substring(0, x));
+		int b = Integer.valueOf(str.substring(x+1, e));
+		int c = Integer.valueOf(str.substring(e+1));
+		
+		if ( a * b == c ) {
+			System.out.println( str );
+			pSet.add(c);
+		}
+		
+	}
+
+	private static List<String> copyWithoutOne(List<String> l, int i) {
+		List<String> newList = new ArrayList<String>();
+		newList.addAll(l);
+		newList.remove(i);
+		return newList ;
+	}
+
+	
 }
