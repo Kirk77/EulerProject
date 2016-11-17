@@ -25,21 +25,22 @@ public class Problem037 {
 	static List<Long> primes = new ArrayList<Long>();
 	
 	public static void main(String[] args) {
-		System.out.println(Problem037.solution(4000));
-//		System.out.println(Problem037.solution(1000000));
+//		System.out.println(Problem037.solution(10));
+		System.out.println(Problem037.solution(11));
 	}
 
 	private static long solution(int x) {
 		long sum = 0;
 		primes.clear();
-
-		for (int i=2; i<=x; i++) {
+		int nCount = 0;
+		for (int i=2; nCount < x; i++) {
 			if ( isPrime(i) && isRemainPrime(i)){
-				System.out.println("-------------------------->" + i);
+				System.out.println(i);
 				sum += i;
+				nCount++;
 			}
 		}
-		
+		System.out.println("=====================");
 		return sum;
 	}
 
@@ -47,8 +48,11 @@ public class Problem037 {
 		if (i < 10) return false;
 		long p = i;
 		
+		if ( p == 3797 ) {
+			p = p * 1;
+		}
 		long r = 1;
-		while (p>0) {
+		while (p>10) {
 			p /= 10;
 			r *= 10;
 //			System.out.println( i + " check " + p + " | " + i%r);
