@@ -29,6 +29,31 @@ public class Problem044 {
 	}
 
 	private static int solution() {
-		return -1;
+
+		int x = Integer.MAX_VALUE;
+		
+		for ( int k = 2; k<10000; k++) {
+			for( int j=k-1; j>0; j--) {
+				
+				int pK = k * ( 3*k -1 ) /2;
+				int pJ = j * ( 3*j -1 ) /2;
+				
+				if ( x != Integer.MAX_VALUE && x < pK-pJ) break;
+				if ( isPentagonal(pK+pJ) && isPentagonal(pK-pJ)) {
+					System.out.println( "pK(" + k + ") : " + pK + ",  pJ(" + j + ") : " + pJ + " -> : " + (pK-pJ));
+					x = (x > pK-pJ) ? pK-pJ : x;
+				}
+			}
+		}
+
+		return x;
+	}
+
+	private static boolean isPentagonal(int i) {
+
+		int a = (1 + (int)Math.sqrt(24*i + 1))/6;
+		
+		if (a * ( 3*a -1 ) /2 == i) return true;		
+		return false;
 	}
 }
