@@ -40,13 +40,56 @@ public class Problem047 {
 	static List<Long> primes = new ArrayList<Long>();
 	
 	public static void main(String[] args) {
-		System.out.println(solution());
+		System.out.println(solution(2));
+		System.out.println(solution(3));
+		System.out.println(solution(4));
 	}
 
-	private static long solution() {
-		return -1;
+	private static long solution( int x) {
+		primes.clear();
+		int nCount = 0;
+		
+		for ( long i=2;;i++) {
+			if ( isPrime(i)) {
+				continue;
+			} else {
+				if (checkX( i, x)) {
+					nCount++;
+				} else {
+					nCount = 0;
+				}
+			}
+		
+			if ( nCount == x-1) {
+				return i - nCount;
+			}
+		}
 	}
 	
+	private static boolean checkX(long i, int x) {
+		List<Long> pF1 = new ArrayList<Long>();
+		List<Long> pF2 = new ArrayList<Long>();
+		
+		for( long l : primes) {
+			if ( i < l ) break;
+			if ( i%l ==0 )
+				pF1.add( l);
+		}
+		if ( pF1.size() != x) return false;
+
+		
+		for( long l : primes) {
+			if ( i-1 < l ) break;
+			if ( (i-1)%l ==0 )
+				pF2.add( l);
+		}
+		if ( pF2.size() != x) return false;
+
+		for ( long p1 : pF1) for( long p2 : pF2) if ( p1 == p2) return false;
+		
+		return true;
+	}
+
 	private static boolean isPrime(long i) {
 		double sqrt = Math.sqrt(i);
 		for ( long l : primes) {
