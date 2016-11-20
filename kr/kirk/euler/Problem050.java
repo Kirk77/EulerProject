@@ -46,27 +46,17 @@ public class Problem050 {
 			isPrime(i + 1);
 		}
 
-		long sum = 0;
-		for (long p : primes) {
-			sum += p;
-		}
-		
 		System.out.println( "=========================== " + x) ;
 		long result = 0;
 		int nCount = 0;
 		
-		for (int i = -1; i < primes.size(); i++) {
-			long tempSum = sum;
-			if (i > -1) {
-				for (int ii = 0; ii <= i; ii++)
-					tempSum -= primes.get(ii);
+		for (int i = 0; i < primes.size(); i++) {
+			long tempSum = 0;
+			int j=i;
+			for ( ; tempSum < x && j<primes.size(); j++) {
+				tempSum += primes.get(j);
 			}
-			
-			int j=primes.size()-1;
-			for ( ; j > i && tempSum - primes.get(j) > x; j--) {
-				tempSum -= primes.get(j);
-			}
-			
+			j--;
 			for (; nCount < j-i; j--) {
 				
 				tempSum -= primes.get(j);
@@ -75,12 +65,11 @@ public class Problem050 {
 					nCount = j - i;
 					result = tempSum;
 					
-					System.out.println(  (nCount -1)+ " : " + tempSum);
+					System.out.println(  nCount + " : " + tempSum);
 					break;
 				}
 			}
 		}
-		
 		return result;
 	}
 
