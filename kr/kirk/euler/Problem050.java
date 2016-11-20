@@ -29,9 +29,11 @@ public class Problem050 {
 	static List<Long> primes = new ArrayList<Long>();
 
 	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
 		System.out.println(solution(100));
 		System.out.println(solution(1000));
 		System.out.println(solution(1000000));
+		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	private static long solution(long x) {
@@ -59,19 +61,22 @@ public class Problem050 {
 				for (int ii = 0; ii <= i; ii++)
 					tempSum -= primes.get(ii);
 			}
-			for (int j = primes.size() - 1; j > i && j > 0; j--) {
-				if ( result != 0 &&  tempSum < result ) break;
-				if (nCount != 0 && nCount > j - i)
-					break;
+			
+			int j=primes.size()-1;
+			for ( ; j > i && tempSum - primes.get(j) > x; j--) {
 				tempSum -= primes.get(j);
-				if ( tempSum == 41) {
-					tempSum *= 1;
-				}
-				if (primes.contains(tempSum) && nCount < j - i) {
+			}
+			
+			for (; nCount < j-i; j--) {
+				
+				tempSum -= primes.get(j);
+				
+				if ( primes.contains(tempSum)) {
 					nCount = j - i;
 					result = tempSum;
 					
-					System.out.println(nCount -1+ " : " + tempSum);
+					System.out.println(  (nCount -1)+ " : " + tempSum);
+					break;
 				}
 			}
 		}
