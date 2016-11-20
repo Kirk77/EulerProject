@@ -30,26 +30,52 @@ public class Problem050 {
 
 	public static void main(String[] args) {
 		System.out.println(solution(100));
-//		System.out.println(solution(1000));
-//		System.out.println(solution(1000000));
+		System.out.println(solution(1000));
+		System.out.println(solution(1000000));
 	}
 
 	private static long solution(long x) {
-		
+
 		primes.clear();
 		primes.add(2L);
 		primes.add(3L);
-		for ( int i=6; i<x; i+=6) {
-			isPrime(i-1);
-			isPrime(i+1);
+		for (int i = 6; i < x; i += 6) {
+			isPrime(i - 1);
+			isPrime(i + 1);
+		}
+
+		long sum = 0;
+		for (long p : primes) {
+			sum += p;
 		}
 		
-		int nCount = 0;
+		System.out.println( "=========================== " + x) ;
 		long result = 0;
-		for ( long p : primes ) {
-			if ( result + p > x) break;
-			result += p;
+		int nCount = 0;
+		
+		for (int i = -1; i < primes.size(); i++) {
+			long tempSum = sum;
+			if (i > -1) {
+				for (int ii = 0; ii <= i; ii++)
+					tempSum -= primes.get(ii);
+			}
+			for (int j = primes.size() - 1; j > i && j > 0; j--) {
+				if ( result != 0 &&  tempSum < result ) break;
+				if (nCount != 0 && nCount > j - i)
+					break;
+				tempSum -= primes.get(j);
+				if ( tempSum == 41) {
+					tempSum *= 1;
+				}
+				if (primes.contains(tempSum) && nCount < j - i) {
+					nCount = j - i;
+					result = tempSum;
+					
+					System.out.println(nCount -1+ " : " + tempSum);
+				}
+			}
 		}
+		
 		return result;
 	}
 
