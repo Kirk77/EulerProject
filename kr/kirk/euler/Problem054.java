@@ -1106,6 +1106,7 @@ public class Problem054 {
 		for ( String s : poker_table) {
 			System.out.println(s);
 		}
+		System.out.println(poker_table.size());
 		
 		int aWin = 0;
 		for (String[] card : cards) {
@@ -1150,17 +1151,50 @@ public class Problem054 {
 				poker_table.add( e.replaceAll("X", c + ""));
 			}
 		}
-			// add back straight
-			for ( char c : _cm) {
-				e = "2X3X4X5XzX";
-				poker_table.add( e.replaceAll("X", c + ""));
-			}
-		
-		// Four of a Kind : 네 장이 같은 카드.
-		for ( int i=_cn.length-1; i>=0; i--) {
-			
+		// add back straight
+		for (char c : _cm) {
+			e = "2X3X4X5XzX";
+			poker_table.add(e.replaceAll("X", c + ""));
 		}
+
+		// Four of a Kind : 네 장이 같은 카드.
+		for (int i = _cn.length - 1; i >= 0; i--) {
+			for (int j = _cn.length - 1; j >= 0; j--) {
+				if (i == j)
+					continue;
+				for (char c : _cm) {
+					if (i > j)
+						e = _cn[j] + c + "XaXbXcXd";
+					else
+						e = "XaXbXcXd" + _cn[j] + c;
+					poker_table.add(e.replaceAll("X", _cn[i] + ""));
+				}
+			}
+		}
+		
+		/*
+static char[] cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'};
+static char[] _cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'v', 'w', 'x', 'y', 'z'};
+	
+static char[] cm = {'S','H','D','C'};
+static char[] _cm = {'a','b','c','d'};
+	
+		 */
 		// Full House : 세 장이 같고, 또 한 쌍이 같음 (Three of a Kind + One Pair).
+		for (int i = _cn.length - 1; i >= 0; i--) {
+			for (int j = _cn.length - 1; j >= 0; j--) {
+				if (i == j)
+					continue;
+				for (char c : _cm) {
+					if (i > j)
+						e = _cn[j] + c + "XaXbXcXd";
+					else
+						e = "XaXbXcXd" + _cn[j] + c;
+					poker_table.add(e.replaceAll("X", _cn[i] + ""));
+				}
+			}
+		}
+		
 		// Flush : 모든 카드의 무늬가 같음.
 		// Straight : 모든 카드가 연속된 숫자.
 		// Three of a Kind : 세 장이 같은 카드.
