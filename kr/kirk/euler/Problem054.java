@@ -1157,6 +1157,9 @@ public class Problem054 {
 			}
 		
 		// Four of a Kind : 네 장이 같은 카드.
+		for ( int i=_cn.length-1; i>=0; i--) {
+			
+		}
 		// Full House : 세 장이 같고, 또 한 쌍이 같음 (Three of a Kind + One Pair).
 		// Flush : 모든 카드의 무늬가 같음.
 		// Straight : 모든 카드가 연속된 숫자.
