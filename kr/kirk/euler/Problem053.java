@@ -42,6 +42,28 @@ public class Problem053 {
 	}
 
 	private static long solution() {
-		return -1;
-	}	
+		
+		int count = 0;
+		for ( int n=2; n<=100; n++) {
+			for ( int r=1; r<n; r++ ) {
+				if (getCombinatorics(n,r)) count++;
+			}
+		}
+		return count;
+	}
+	
+	private static boolean getCombinatorics(int n, int r) {
+		int big = Math.max(r, n-r);
+		int small = Math.min(r, n-r);
+		
+		double c = 1;
+		for (long i = n; i > big; i--) {
+			c *= i;
+		}
+		for (long i = small; i>1; i--) {
+			c /= i;
+			if ( c < 1000000 ) return false;
+		}
+		return (c > 1000000);
+	}
 }
