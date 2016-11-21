@@ -1179,7 +1179,6 @@ static char[] _cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'v', 'w', 'x', 'y',
 static char[] cm = {'S','H','D','C'};
 static char[] _cm = {'a','b','c','d'};
 	
-		 */
 		// Full House : 세 장이 같고, 또 한 쌍이 같음 (Three of a Kind + One Pair).
 		for (int i = _cn.length - 1; i >= 0; i--) {
 			for (int j = _cn.length - 1; j >= 0; j--) {
@@ -1194,6 +1193,7 @@ static char[] _cm = {'a','b','c','d'};
 				}
 			}
 		}
+		 */
 		
 		// Flush : 모든 카드의 무늬가 같음.
 		// Straight : 모든 카드가 연속된 숫자.
