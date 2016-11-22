@@ -1,6 +1,5 @@
 package kr.kirk.euler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -1086,12 +1085,10 @@ public class Problem054 {
 	};
 	
 	static char[] cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'};
-	static char[] _cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'v', 'w', 'x', 'y', 'z'};
+	static char[] _cn = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'};
 	
 	static char[] cm = {'S','H','D','C'};
 	static char[] _cm = {'a','b','c','d'};
-	
-	static List<String> poker_table = new ArrayList<String>();
 	
 	public static void main(String[] args) {
 		
@@ -1101,24 +1098,17 @@ public class Problem054 {
 	}
 
 	private static long solution() {
-		makePointTable();
-
-		for ( String s : poker_table) {
-			System.out.println(s);
-		}
-		System.out.println(poker_table.size());
-		
 		int aWin = 0;
 		for (String[] card : cards) {
 			List<String> c = Arrays.asList(card);
 			if (getPoint(c.subList(0, 5)) < getPoint(c.subList(5, 10)))
 				aWin++;
-			break;
 		}
 		return aWin;
 	}
 
-	private static long getPoint(List<String> list) {
+	private static double getPoint(List<String> list) {
+		
 		for (int i=0; i<list.size(); i++) {
 			String c = "";
 			for ( int k=0; k<cn.length; k++) {
@@ -1132,95 +1122,118 @@ public class Problem054 {
 		}
 
 		Collections.sort(list);
+		return getPockerRank(list);
+	}
+	
+	private static int getPockerRank(List<String> list) {
+		
 		String sortedCards ="";
 		for ( String s : list) sortedCards += s;
-		return poker_table.indexOf(sortedCards);
-	}
-	
-	private static void makePointTable() {
+		
 		// Royal Flush : 10, J, Q, K, A가 무늬도 같음.
-		String e = "vXwXxXyXzX";
-		for ( char c : _cm) {
-			poker_table.add( e.replaceAll("X", c + ""));
-		}
+		if ( sortedCards.equals("iajakalama"))	return 1;
+		if ( sortedCards.equals("ibjbkblbmb"))	return 2;
+		if ( sortedCards.equals("icjckclcmc"))		return 3;
+		if ( sortedCards.equals("idjdkdldmd"))	return 4;
+
 		
 		// Straight Flush : 모든 카드가 연속된 숫자이면서 무늬도 같음.
-		for ( int i= _cn.length-1; i>=4; i--) {
-			for ( char c : _cm) {
-				e = String.format("%cX%cX%cX%cX%cX", _cn[i-4],_cn[i-3],_cn[i-2],_cn[i-1],_cn[i]);
-				poker_table.add( e.replaceAll("X", c + ""));
+		boolean bFlag = true;
+		char prevNumber = list.get(0).charAt(0);
+		char prevMark = list.get(0).charAt(1);
+		for ( int i=1; i<list.size(); i++ ) {
+			if ( prevNumber +1 != list.get(i).charAt(0) || prevMark != list.get(i).charAt(1)) {
+				bFlag = false;
+				break;
 			}
+			prevNumber = list.get(i).charAt(0);
 		}
-		// add back straight
-		for (char c : _cm) {
-			e = "2X3X4X5XzX";
-			poker_table.add(e.replaceAll("X", c + ""));
-		}
+		if (bFlag) return 1000 + list.get(0).charAt(0);
+		
+		//back straight flush
+		if ( sortedCards.equals("aabacadama")) return 1000 + 'a';
+		if ( sortedCards.equals("abbbcbdbmb")) return 1000 + 'b';
+		if ( sortedCards.equals("acbcccdcmc")) return 1000 + 'c';
+		if ( sortedCards.equals("adbdcdddmd")) return 1000 + 'd';
 
-		// Four of a Kind : 네 장이 같은 카드.
-		for (int i = _cn.length - 1; i >= 0; i--) {
-			for (int j = _cn.length - 1; j >= 0; j--) {
-				if (i == j)
-					continue;
-				for (char c : _cm) {
-					if (i > j)
-						e = _cn[j] + ""+ c + "XaXbXcXd";
-					else
-						e = "XaXbXcXd" + _cn[j] + c;
-					poker_table.add(e.replaceAll("X", _cn[i] + ""));
-				}
+		// Four of a Kind : 네 장이 같은 카드
+		int nCount = 0;
+		prevNumber = list.get(0).charAt(0);
+		for ( int i=1; i<list.size(); i++) {
+			if ( prevNumber != list.get(i).charAt(0)) {
+				nCount ++;
+				prevNumber = list.get(i).charAt(0);
+			}
+			if ( nCount > 1) {
+				break;
 			}
 		}
+		if ( nCount == 1) return 2000 + 'm'-  list.get(1).charAt(0);
 		
-		/*
-static char[] cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'};
-static char[] _cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'v', 'w', 'x', 'y', 'z'};
-	
-static char[] cm = {'S','H','D','C'};
-static char[] _cm = {'a','b','c','d'};
-	
-		 */
 		// Full House : 세 장이 같고, 또 한 쌍이 같음 (Three of a Kind + One Pair).
-		for (int i = _cn.length - 1; i >= 0; i--) {
-			
-			for (int mm = _cm.length-1; mm>=0; mm--) {
-				String ttt = "";
-				for ( int m=0; m<_cm.length; m++) {
-					if ( m == mm ) continue;
-					ttt +=  _cn[i] + "" + _cm[m];
-				}
-				
-				for (int j = _cn.length - 1; j >= 0; j--) {
-					if (i == j)
-						continue;
-					String dd= String.format("%cX%cY", _cn[j],_cn[j]);
-					if ( i>j) {
-						e = dd + ttt;
-					} else {
-						e = ttt + dd;
-					}
-					
-					for (int x=0; x<_cm.length; x++)
-						for (int y=0;y<_cm.length;y++)
-							poker_table.add(e.replace('X', _cm[x]).replace('Y', _cm[y]));
-				}
+		if ((list.get(0).charAt(0) == list.get(1).charAt(0) && list.get(2).charAt(0) == list.get(3).charAt(0) && list.get(2).charAt(0) == list.get(4).charAt(0))
+			|| (list.get(3).charAt(0) == list.get(4).charAt(0) && list.get(0).charAt(0) == list.get(1).charAt(0) && list.get(0).charAt(0) == list.get(2).charAt(0)))
+			return 3000 + 'm' - Math.max(list.get(0).charAt(0), list.get(4).charAt(0));
+
+		// Flush : 모든 카드의 무늬가 같음.
+		bFlag = true;
+		prevMark = list.get(0).charAt(1);
+		for ( int i=1; i<list.size(); i++) {
+			if ( prevMark != list.get(i).charAt(1)) {
+				bFlag = false;
+				break;
 			}
 		}
-		
-		// Flush : 모든 카드의 무늬가 같음.
-		for(int a=_cn.length-1; a >= 4; a--)
-			for(int b=a-1; b>=3; b--)
-				for(int c=b-1; c>=2; c--)
-					for(int d=c-1; d>=1; d--)
-						for(int f=d-1; f>=0; f--)
-							for ( int m=0; m<_cm.length; m++)
-								poker_table.add(String.format("%c%c%c%c%c%c%c%c%c%c", _cn[f],_cm[m], _cn[d],_cm[m], _cn[c],_cm[m], _cn[b],_cm[m],_cn[a], _cm[m] ));
+		if ( bFlag ) return 4000 + 'm' - list.get(4).charAt(0);
 
 		// Straight : 모든 카드가 연속된 숫자.
+		bFlag = true;
+		for ( int i=1; i<list.size(); i++ ) {
+			if ( list.get(i-1).charAt(0) +1 != list.get(i).charAt(0)) {
+				bFlag = false;
+				break;
+			}
+		}
+		if (bFlag) return 5000 + 'm' - list.get(4).charAt(0);
+		
+		// back straight
+		if (	list.get(0).charAt(0) == 'a'
+			&& list.get(1).charAt(0) == 'b'
+			&& list.get(2).charAt(0) == 'c'
+			&& list.get(3).charAt(0) == 'd'
+			&& list.get(4).charAt(0) == 'm' )
+			return 5000 + 'm' - list.get(3).charAt(0);
+		
 		// Three of a Kind : 세 장이 같은 카드.
+		prevNumber = list.get(2).charAt(0);
+		nCount = 0;
+		for ( String s : list ) if ( s.charAt(0) == prevNumber ) nCount++;
+		if ( nCount == 3) return 6000 + 'm' - prevNumber;
+		
 		// Two Pairs : 서로 다른 두 쌍이 같은 카드.
-		// One Pair : 한 쌍이 같은 카드.
-		// High Card : 가장 높은 카드의 값으로 비교.
-	}
+		//		aaxbb
+		if (list.get(0).charAt(0) == list.get(1).charAt(0) && list.get(3).charAt(0) == list.get(4).charAt(0))
+				return 7000 +  'm' - list.get(4).charAt(0);
+		//		xaabb
+		if (list.get(1).charAt(0) == list.get(2).charAt(0) && list.get(3).charAt(0) == list.get(4).charAt(0))
+				 return 7000 + 'm' - list.get(4).charAt(0);
+		//		aabbx
+		if (list.get(0).charAt(0) == list.get(1).charAt(0) && list.get(2).charAt(0) == list.get(3).charAt(0))
+				return 7000 + 'm' - list.get(3).charAt(0);
 
+		// One Pair : 한 쌍이 같은 카드
+		bFlag = false;
+		int i=1;
+		for( ; i<list.size(); i++) {
+			if ( list.get(i-1).charAt(0) == list.get(i).charAt(0)) {
+				bFlag = true;
+				break;
+			}
+		}
+		if (bFlag) return 8000 +  'm' - list.get(i).charAt(0);
+
+		// High Card : 가장 높은 카드의 값으로 비교.
+		
+		return 9000 + 'm' - list.get(4).charAt(0);
+	}
 }
