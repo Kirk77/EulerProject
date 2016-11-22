@@ -1164,7 +1164,7 @@ public class Problem054 {
 					continue;
 				for (char c : _cm) {
 					if (i > j)
-						e = _cn[j] + c + "XaXbXcXd";
+						e = _cn[j] + ""+ c + "XaXbXcXd";
 					else
 						e = "XaXbXcXd" + _cn[j] + c;
 					poker_table.add(e.replaceAll("X", _cn[i] + ""));
@@ -1179,23 +1179,43 @@ static char[] _cn = {'2', '3', '4', '5', '6', '7', '8', '9', 'v', 'w', 'x', 'y',
 static char[] cm = {'S','H','D','C'};
 static char[] _cm = {'a','b','c','d'};
 	
+		 */
 		// Full House : 세 장이 같고, 또 한 쌍이 같음 (Three of a Kind + One Pair).
 		for (int i = _cn.length - 1; i >= 0; i--) {
-			for (int j = _cn.length - 1; j >= 0; j--) {
-				if (i == j)
-					continue;
-				for (char c : _cm) {
-					if (i > j)
-						e = _cn[j] + c + "XaXbXcXd";
-					else
-						e = "XaXbXcXd" + _cn[j] + c;
-					poker_table.add(e.replaceAll("X", _cn[i] + ""));
+			
+			for (int mm = _cm.length-1; mm>=0; mm--) {
+				String ttt = "";
+				for ( int m=0; m<_cm.length; m++) {
+					if ( m == mm ) continue;
+					ttt +=  _cn[i] + "" + _cm[m];
+				}
+				
+				for (int j = _cn.length - 1; j >= 0; j--) {
+					if (i == j)
+						continue;
+					String dd= String.format("%cX%cY", _cn[j],_cn[j]);
+					if ( i>j) {
+						e = dd + ttt;
+					} else {
+						e = ttt + dd;
+					}
+					
+					for (int x=0; x<_cm.length; x++)
+						for (int y=0;y<_cm.length;y++)
+							poker_table.add(e.replace('X', _cm[x]).replace('Y', _cm[y]));
 				}
 			}
 		}
-		 */
 		
 		// Flush : 모든 카드의 무늬가 같음.
+		for(int a=_cn.length-1; a >= 4; a--)
+			for(int b=a-1; b>=3; b--)
+				for(int c=b-1; c>=2; c--)
+					for(int d=c-1; d>=1; d--)
+						for(int f=d-1; f>=0; f--)
+							for ( int m=0; m<_cm.length; m++)
+								poker_table.add(String.format("%c%c%c%c%c%c%c%c%c%c", _cn[f],_cm[m], _cn[d],_cm[m], _cn[c],_cm[m], _cn[b],_cm[m],_cn[a], _cm[m] ));
+
 		// Straight : 모든 카드가 연속된 숫자.
 		// Three of a Kind : 세 장이 같은 카드.
 		// Two Pairs : 서로 다른 두 쌍이 같은 카드.
