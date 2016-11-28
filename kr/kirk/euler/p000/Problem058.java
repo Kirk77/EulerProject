@@ -42,15 +42,15 @@ public class Problem058 {
 
 	private static long solution(float x) {
 		int n = 0;
-		int total = 0;
+		int total = 1;
 		for ( long i=3;; i+=2) {
 			total += 4;
-
+			
 			if (isPrime(i*i-(i-1))) n++;
 			if (isPrime(i*i-2*(i-1))) n++;
 			if (isPrime(i*i-3*(i-1))) n++;
 
-			System.out.println(i + " : " + (float)n / total);
+			//System.out.println(i + " : " + (float)n / total);
 			if ( (float)n / total < x) return i;
 		}
 	}
