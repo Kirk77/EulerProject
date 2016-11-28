@@ -43,25 +43,24 @@ public class Problem058 {
 	private static long solution(float x) {
 		int n = 0;
 		int total = 0;
-		for ( long i=3;i<50; i+=2) {
+		for ( long i=3;; i+=2) {
 			total += 4;
-			for ( long k=i*i-i+1;k>0;k-=i-1) {
-				if (isPrime(k)) n++;
-			}
-//			System.out.println((float)n / total);
-			if ( (float)n / total < x) return i-1;
+
+			if (isPrime(i*i-(i-1))) n++;
+			if (isPrime(i*i-2*(i-1))) n++;
+			if (isPrime(i*i-3*(i-1))) n++;
+
+			System.out.println(i + " : " + (float)n / total);
+			if ( (float)n / total < x) return i;
 		}
-		return -1;
 	}
 
 	private static boolean isPrime(long k) {
-		if ( k%6 != 1 && k%6 != 5) return false;
 		
 		double sqrt = Math.sqrt(k);
 		for ( int i=2; i<sqrt; i++) {
 			if ( k % i == 0 ) return false;
 		}
-		System.out.println("---> " + k);
 		return true;
 	}
 }
