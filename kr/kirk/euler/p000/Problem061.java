@@ -1,7 +1,11 @@
 package kr.kirk.euler.p000;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /*
 삼각수, 사각수, 오각수 같은 다각수들은 아래의 공식으로 만들 수 있습니다.
@@ -37,49 +41,87 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 
 public class Problem061 {
 
+	static Map<String, Integer> l = new HashMap<String, Integer>();
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		System.out.println(solution());
+		System.out.println(solution(6));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	private static long solution(int x) {
 		int k=0;
-		List<Integer> l3 = new ArrayList<Integer>();
+		
 		for( int n=10;;n++) {
 			k = n*( n+1)/2;
 			if ( k > 9999) break;
-			if ( k>1000) l3.add(k);
+			if ( k>1000) l.put(k + "",k);
 		}
-		List<Integer> l4 = new ArrayList<Integer>();
+
 		for( int n=10;;n++) {
 			k = n*n;
 			if ( k > 9999) break;
-			if ( k>1000) l4.add(k);
+			if ( k>1000) l.put(k + "",k);
 		}
-		List<Integer> l5 = new ArrayList<Integer>();
+		
 		for( int n=10;;n++) {
 			k = n*( 3*n-1)/2;
 			if ( k > 9999) break;
-			if ( k>1000) l5.add(k);
+			if ( k>1000) l.put(k + "",k);
 		}
-		List<Integer> l6 = new ArrayList<Integer>();
+		
 		for( int n=10;;n++) {
 			k = n*( 2*n-1);
 			if ( k > 9999) break;
-			if ( k>1000) l6.add(k);
+			if ( k>1000) l.put(k + "",k);
 		}
-		List<Integer> l7 = new ArrayList<Integer>();
+		
 		for( int n=10;;n++) {
 			k = n*( 5*n-3)/2;
 			if ( k > 9999) break;
-			if ( k>1000) l7.add(k);
+			if ( k>1000) l.put(k + "",k);
 		}
-		List<Integer> l8 = new ArrayList<Integer>();
+		
 		for( int n=10;;n++) {
 			k = n*( 3*n-2);
 			if ( k > 9999) break;
-			if ( k>1000) l8.add(k);
+			if ( k>1000) l.put(k + "",k);
+		}
+
+		for ( int p : l.values() ) {
+			int pp = p;
+			int[] result = new int[x];
+			result[0] = pp;
+			for (int i=1; i<6; i++) {
+				int f = findNextNumber(pp, pp%100, result);
+				if (f>0) {
+					
+					for ( int r : result) if (r == f) continue;
+					
+					result[i] = f;
+					pp = f;
+				}
+			}
+			if ( result[x-1]%100 == result[0]/100) {
+				long sum = 0;
+				for ( int r : result) {
+					System.out.print(r + " ");
+					sum+= r;
+				}
+				System.out.println("---> " + sum);
+				//return sum;
+			}
+		}
+
+		
+		return -1;
+	}
+
+	private static int findNextNumber(int pp, int head, int[] result) {
+		for ( int i=99; i>9; i--) {
+			int c = Integer.parseInt(head + "" + i);
+			if ( pp == c ) continue;
+			Integer k = l.get(head + "" + i);
+			if (k != null) return k;
 		}
 		return -1;
 	}
