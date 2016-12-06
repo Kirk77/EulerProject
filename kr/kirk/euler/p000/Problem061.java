@@ -2,10 +2,8 @@ package kr.kirk.euler.p000;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /*
 삼각수, 사각수, 오각수 같은 다각수들은 아래의 공식으로 만들 수 있습니다.
@@ -41,88 +39,113 @@ Find the sum of the only ordered set of six cyclic 4-digit numbers for which eac
 
 public class Problem061 {
 
-	static Map<String, Integer> l = new HashMap<String, Integer>();
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		System.out.println(solution(6));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
-
+	
+	interface Func {int func(int n);}
+	
+	public static class P3 implements Func {		@Override		public int func(int n) {
+			return n * (n + 1) / 2;
+	}}
+	public static class P4 implements Func {		@Override		public int func(int n) {
+			return n * n;
+	}}
+	public static class P5 implements Func {		@Override		public int func(int n) {
+			return n * (3 * n - 1) / 2;
+	}}
+	public static class P6 implements Func {		@Override		public int func(int n) {
+			return n * (2 * n - 1);
+	}}
+	public static class P7 implements Func {		@Override		public int func(int n) {
+			return n * (5 * n - 3) / 2;
+	}}
+	public static class P8 implements Func {		@Override		public int func(int n) {
+			return n * (3 * n - 2);
+	}}
+	
 	private static long solution(int x) {
-		int k=0;
+		Func[] arrP = { new P3(), new P4(), new P5(), new P6(), new P7() };
+		List<Integer> result = new ArrayList<Integer>();
+	
+		Map<String, Integer> mapP = new HashMap<String, Integer>();
 		
-		for( int n=10;;n++) {
-			k = n*( n+1)/2;
-			if ( k > 9999) break;
-			if ( k>1000) l.put(k + "",k);
-		}
-
-		for( int n=10;;n++) {
-			k = n*n;
-			if ( k > 9999) break;
-			if ( k>1000) l.put(k + "",k);
-		}
+		for ( Func f : arrP)
+			for ( int i=10;; i++) {
+				int k = f.func(i);
+				
+				if ( k < 1000) continue;
+				if ( k > 9999) break;
+				
+				mapP.put(k+"", k);
+			}
 		
-		for( int n=10;;n++) {
-			k = n*( 3*n-1)/2;
+		P8 f8 = new P8();
+		for ( int i=10;; i++) {
+			int k = f8.func(i);
+			
+			if ( k < 1000) continue;
 			if ( k > 9999) break;
-			if ( k>1000) l.put(k + "",k);
-		}
-		
-		for( int n=10;;n++) {
-			k = n*( 2*n-1);
-			if ( k > 9999) break;
-			if ( k>1000) l.put(k + "",k);
-		}
-		
-		for( int n=10;;n++) {
-			k = n*( 5*n-3)/2;
-			if ( k > 9999) break;
-			if ( k>1000) l.put(k + "",k);
-		}
-		
-		for( int n=10;;n++) {
-			k = n*( 3*n-2);
-			if ( k > 9999) break;
-			if ( k>1000) l.put(k + "",k);
-		}
-
-		for ( int p : l.values() ) {
-			int pp = p;
-			int[] result = new int[x];
-			result[0] = pp;
-			for (int i=1; i<6; i++) {
-				int f = findNextNumber(pp, pp%100, result);
-				if (f>0) {
-					
-					for ( int r : result) if (r == f) continue;
-					
-					result[i] = f;
-					pp = f;
+			
+			result.add(k);
+			boolean bResult = findNumber( mapP, result);
+			if (bResult) {
+				
+				if (checkResult(arrP, result)) {
+					long sum = 0;
+					for (int kk : result) {
+						System.out.print(kk + ",");
+						sum += kk;
+					}
+					System.out.println();
+					return sum;
 				}
 			}
-			if ( result[x-1]%100 == result[0]/100) {
-				long sum = 0;
-				for ( int r : result) {
-					System.out.print(r + " ");
-					sum+= r;
-				}
-				System.out.println("---> " + sum);
-				//return sum;
-			}
+			result.clear();
 		}
-
-		
 		return -1;
 	}
 
-	private static int findNextNumber(int pp, int head, int[] result) {
-		for ( int i=99; i>9; i--) {
-			int c = Integer.parseInt(head + "" + i);
-			if ( pp == c ) continue;
-			Integer k = l.get(head + "" + i);
-			if (k != null) return k;
+	private static boolean checkResult(Func[] arrP, List<Integer> result) {
+		for (Func f : arrP) {
+			int t = 0;
+			for (int j = 10;; j++) {
+				int k = f.func(j);
+
+				if (k < 1000) continue;
+				if (k > 9999) break;
+
+				if (result.contains(k)) t++;
+			}
+			if ( t == 0) return false;
 		}
-		return -1;
+		return true;
+	}
+
+	private static boolean findNumber( Map<String, Integer> mapP, List<Integer> result) {
+		
+		if ( result.size() == 6) {
+			if ( result.get(0)/100 == result.get(5)%100)
+				return true;
+			else return false;
+		}
+		for ( int i=10; i<100; i++) {
+			int head = result.get(result.size()-1)%100;
+			if ( head < 10) continue;
+			Integer p = mapP.get(head + "" + i);
+			if (p == null) continue;
+			if (result.contains(p)) continue;
+			result.add(p);
+			boolean bResult = findNumber(mapP, result);
+			if ( !bResult ) {
+				result.remove(result.size()-1);
+				continue;
+			} else {
+				return true;
+			}
+		}
+		return false;
 	}
 }
