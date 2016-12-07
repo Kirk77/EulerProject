@@ -1,5 +1,8 @@
 package kr.kirk.euler.p000;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 모든 제곱근은 아래와 같이 연분수로 나타낼 수 있는데, 이 때 반복되는 부분이 나타납니다.
 
@@ -47,13 +50,96 @@ package kr.kirk.euler.p000;
  */
 public class Problem064 {
 
+	public static class ContinuedFraction {
+		private int n;	// 정수부 
+		private int down;	// 분모 정수
+		private int up;		// 분자 정수
+		
+		public int getN() {
+			return n;
+		}
+		public void setN(int n) {
+			this.n = n;
+		}
+		public int getDown() {
+			return down;
+		}
+		public void setDown(int down) {
+			this.down = down;
+		}
+		public int getUp() {
+			return up;
+		}
+		public void setUp(int up) {
+			this.up = up;
+		}
+		
+		@Override
+		public String toString() {
+			return "ContinuedFraction [n=" + n + ", down=" + down + ", up="
+					+ up + "]";
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ContinuedFraction other = (ContinuedFraction) obj;
+			if (down != other.down)
+				return false;
+			if (n != other.n)
+				return false;
+			if (up != other.up)
+				return false;
+			return true;
+		}
+		
+	}
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		System.out.println(solution());
+		System.out.println(solution(10000));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
-	private static long solution() {
-		return -1;
+	private static long solution(int x) {
+		int nCount = 0;
+		for ( int i=2; i<=x; i++) {
+			if ( Math.sqrt(i) == (int)Math.sqrt(i))
+				continue;
+			if ( getPeriod(i) % 2 == 1)
+				nCount++;
+		}
+		return nCount;
+	}
+
+	private static int getPeriod(int i) {
+		List<ContinuedFraction> arrF = new ArrayList<ContinuedFraction>();
+		int sqrt = (int) Math.sqrt(i);
+		int n = 4;
+		int down = 1;
+		int up = -sqrt;
+
+		while(true) {
+			ContinuedFraction f = new ContinuedFraction();
+			down = (i - up * up) / down;
+			n = 0;
+			up = -up;
+			while ( Math.sqrt(i) + up - down  > 0 ) {
+				up -= down;
+				n++;
+			}
+			f.setN(n);
+			f.setUp(up);
+			f.setDown(down);
+			
+			if ( arrF.size()>0 && arrF.get(0).equals(f)) break;
+			
+			arrF.add(f);
+			
+		}
+		return arrF.size();
 	}
 }
