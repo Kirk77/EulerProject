@@ -1,5 +1,7 @@
 package kr.kirk.euler.p000;
 
+import java.math.BigInteger;
+
 /*
 
 제곱근 2는 아래와 같은 연분수의 꼴로 나타낼 수 있습니다.
@@ -25,11 +27,25 @@ public class Problem065 {
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		System.out.println(solution());
+		System.out.println(solution(100));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
-	private static long solution() {
-		return -1;
+	private static long solution(int x) {
+		 
+		BigInteger d = BigInteger.ONE;
+		BigInteger n = BigInteger.valueOf(2);
+		 
+		for (int i = 2; i <= x; i++) {
+		    BigInteger temp = d;
+		    int c = (i % 3 == 0) ? 2 * (i / 3) : 1;
+		    d = n;
+		    n = d.multiply( BigInteger.valueOf(c)).add(temp);
+		}
+		
+		long sum = 0;
+		byte[] nn = n.toString().getBytes();
+		for ( byte b : nn) sum += b-'0';
+		return sum;
 	}
 }
