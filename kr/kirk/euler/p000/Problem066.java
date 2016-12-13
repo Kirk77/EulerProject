@@ -47,36 +47,55 @@ D = {2, 3, 5, 6, 7} 에 대해서 x를 최소화하는 자연수 해를 찾아�
 
 D ≤ 1000 인 경우에 대해 x를 최소화하는 해를 구하면, 가장 큰 x의 값을 갖는 D는 얼마입니까?
 
+
+http://www.nicklib.com/library/algo/p/pellEqu_t.html
  */
 public class Problem066 {
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-//		System.out.println(solution(7));
+		System.out.println(solution(7));
 		System.out.println(solution(100));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	private static long solution(int n) {
-		long X = 0;
-		long Y = 0;
-		long result = 5;
-		for ( long d=5; d<=n; d++) {
-			long D = (long) Math.sqrt(d);
-			if ( D*D == d) continue;
-			long x = 0;
-			long y = 0;
-			for ( y=1;; y++) {
-				x = (long) Math.sqrt( d * y * y + 1);
-				if ( Math.sqrt( d * y * y + 1) == x) break;
+		int result = 0;
+		long pmax = 0;
+		 
+		for(int D = 2; D <= n; D++){
+		    long limit = (int)Math.sqrt(D);
+		    if (limit * limit == D) continue;
+		 
+		    long m = 0;
+		    long d = 1;
+		    long a = limit;
+		 
+		    long xk = 1;
+		    long x = a;
+		 
+		    long yk = 0;
+		    long y = 1;
+		 
+			while (x * x - D * y * y != 1) {
+				m = d * a - m;
+				d = (D - m * m) / d;
+				a = (limit + m) / d;
+
+				long xk_1 = xk;
+				xk = x;
+				long yk_1 = yk;
+				yk = y;
+
+				x = a * xk + xk_1;
+				y = a * yk + yk_1;
 			}
-			if ( X < x) {
-				X = x;
-				Y = y;
-				result = d;
-			}
+		 
+		    if (x > pmax) {
+		        pmax = x;
+		        result = D;
+		    }
 		}
-		System.out.println( "x : " + X + ", y : " + Y + ", D : " + result);
 		return result;
 	}
 }
