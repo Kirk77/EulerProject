@@ -1,5 +1,7 @@
 package kr.kirk.euler.p000;
 
+import java.math.BigInteger;
+
 /*
 
 
@@ -55,10 +57,11 @@ public class Problem066 {
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		System.out.println(solution(7));
-		System.out.println(solution(100));
+		System.out.println(solution(1000));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
+	/*
 	private static long solution(int n) {
 		int result = 0;
 		long pmax = 0;
@@ -92,6 +95,47 @@ public class Problem066 {
 			}
 		 
 		    if (x > pmax) {
+		        pmax = x;
+		        result = D;
+		    }
+		}
+		return result;
+	}
+	*/
+	
+	private static long solution(int n) {
+		int result = 0;
+		BigInteger pmax = BigInteger.ZERO;
+		 
+		for(int D = 2; D <= n; D++){
+		    long limit = (int)Math.sqrt(D);
+		    if (limit * limit == D) continue;
+		 
+		    BigInteger m = BigInteger.ZERO;
+		    BigInteger d = BigInteger.ONE;
+		    BigInteger a = BigInteger.valueOf(limit);
+		 
+		    BigInteger xk = BigInteger.ONE;
+		    BigInteger x = a;
+		 
+		    BigInteger yk = BigInteger.ZERO;
+		    BigInteger y = BigInteger.ONE;
+		 
+			while (x.multiply(x).compareTo(y.multiply(y).multiply(BigInteger.valueOf(D)).add(BigInteger.ONE)) != 0) {
+				m = d.multiply(a).add(m.negate());
+				d = m.multiply(m).negate().add(BigInteger.valueOf(D)).divide(d);
+				a = m.add(BigInteger.valueOf(limit)).divide(d);
+
+				BigInteger xk_1 = xk;
+				xk = x;
+				BigInteger yk_1 = yk;
+				yk = y;
+
+				x = a.multiply(xk).add(xk_1);
+				y = a.multiply(yk).add(yk_1);
+			}
+		 
+		    if (x.compareTo(pmax) > 0) {
 		        pmax = x;
 		        result = D;
 		    }
