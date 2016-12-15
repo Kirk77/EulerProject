@@ -25,38 +25,36 @@ n이 1,000,000 이하의 자연수일 때, n/φ(n)는 언제 최대가 됩니까
 
 public class Problem069 {
 	
-	static List<Integer> primes = new ArrayList<Integer>();
+	static List<Long> primes = new ArrayList<Long>();
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
+
 //		System.out.println(solution(10));
-		System.out.println(solution(1000));
+		System.out.println(solution(1000000));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	private static long solution(int x) {
 		
 		primes.clear();
-		primes.add(2);
-		primes.add(3);
+		primes.add(2L);
+		primes.add(3L);
 		
-		for (int i=6; i<=x; i+=6) {
+		for (long i = 6; i <= Math.sqrt(x); i += 6) {
 			if ( isPrime(i-1)) primes.add(i-1);
 			if ( isPrime(i+1)) primes.add(i+1);
 		}
 		
-		int result = 0;
-		double maxP = 0;
-		double temp = 0;
-		for ( int i=2; i<=x; i++) {
-			if ( i ==30) 
-				i += 0;
-			temp = (double)i / getPhi(i);
-			if ( temp > maxP) {
-				maxP = temp;
-				result = i;
+		long result = 1;
+		
+		for ( long p : primes) {
+			result *= p;
+			if ( result > x) {
+				result /= p;
+				break;
 			}
 		}
-		System.out.println( result + " : " + result / maxP + " -> " + maxP);
+		
 		return result;
 	}
 
@@ -66,22 +64,5 @@ public class Problem069 {
 			if ( k % i == 0 ) return false;
 		}
 		return true;
-	}
-	
-	private static int getPhi(int n) {
-
-		if ( isPrime(n)) return n-1;
-		
-		HashSet<Integer> s = new HashSet<Integer>();
-	
-		for (int p : primes) {
-			if ( p > n) break;
-			if ( n % p == 0) {
-				for (int pk=p; pk<n; pk+=p) {
-					s.add(pk);
-				}
-			}
-		}
-		return n-1-s.size();
 	}
 }
