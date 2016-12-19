@@ -13,48 +13,26 @@ public class Problem072 {
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 
-		System.out.println(solution(1));
-		System.out.println(solution(2));
-		System.out.println(solution(3));
-		System.out.println(solution(4));
-		System.out.println(solution(5));
-		System.out.println(solution(6));
-		System.out.println(solution(7));
-		System.out.println(solution(8));
-//		System.out.println(solution((int) Math.pow(10, 6)));
+//		for ( int i=2; i<100; i++)	System.out.println(i + " : " + solution(i));
+		System.out.println(solution((int) Math.pow(10, 6)));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 	
 	private static long solution(int x) {
 
-		long nCount = 0;
-		for (int d=2; d<=x; d++) {
-			nCount++;
-			for (int n = 2; n < d; n++) {
-				if (gcd(n, d) == 1) {
-					nCount++;
-				}
-			}
+		int limit = x;
+		int[] phi = new int[x+1];
+		for ( int i=0; i<=x; i++) phi[i] = i;
+		
+		long result = 0;
+		for(int i = 2; i <= limit; i++){
+		    if (phi[i] == i) {
+		        for (int j = i; j <= limit; j += i) {
+		            phi[j] = phi[j] / i * (i - 1);
+		        }
+		    }
+		    result += phi[i];
 		}
-		return nCount;
-	}
-	
-	private static long gcd(long x, long i) {
-		
-		if ( x == i ) return x;
-		
-		long big =  x > i ? x : i;
-		long small = x > i ? i : x;
-		
-		long r = 1;
-		
-		while (r>0) {
-			r = big % small;
-			big = small;
-			small = r;
-		}
-		
-//		return x * i / big; // 최소공배수
-		return big; // 최대공약수
+		return result;
 	}
 }
