@@ -21,26 +21,53 @@ public class Problem075 {
 	
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		System.out.println(solution(10000));
-//		System.out.println(solution(1500000));
+		System.out.println(solution(50));
+		System.out.println(solution(1500000));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 	
 	private static long solution(int x) {
 		int[] result = new int[x+1];
 		
-		for ( int a = 3; a<x/2; a++) {
-			for ( int b = a+1; b<x/2; b++) {
-				double k2 = Math.sqrt(a*a + b*b);
-				int k = (int)k2;
-				if ( a+b+k>x) break;
-				if ( k == k2) {
-					result[a+b+k]++;
+		long mlimit = (long)Math.sqrt(x/2);
+
+		for ( long m=2; m<mlimit; m++) {
+			for ( long n=1; n<m; n++) {
+				if ( (m+n)%2==0 || gcd(m,n) != 1) continue;
+				long a = m*m - n*n;
+				long b = 2*m*n;
+				long c = m*m + n*n;
+				long l = a+b+c;
+				while ( l <= x) {
+					result[(int) l]++;
+					l += a+b+c;
 				}
 			}
 		}
-		int c = 0;
+		
+		long c = 0;
 		for ( int n : result) if ( n==1 ) c++;
 		return c;
+	}
+
+	private static long gcd(long x, long i) {
+
+		if (x == i)
+			return x;
+
+		long big = x > i ? x : i;
+		long small = x > i ? i : x;
+
+		long r = 1;
+
+		while (r > 0) {
+			r = big % small;
+			big = small;
+			small = r;
+		}
+
+		// return x * i / big; // 최소공배수
+		return big; // 최대공약수
+
 	}
 }
