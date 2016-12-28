@@ -1,7 +1,6 @@
 package kr.kirk.euler.p000;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -14,32 +13,49 @@ import java.util.List;
 2 + 2 + 2 + 2 + 2
 
 소수의 합으로 나타내는 방법이 5000가지가 넘는 최초의 숫자는 얼마입니까?
+
 */
 public class Problem077 {
-	
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		System.out.println(solution(5));
-//		System.out.println(solution(5000));
+//		System.out.println(solution(5));
+		System.out.println(solution(5000));
 		System.out.println("실행시간 : " + (System.currentTimeMillis() - startTime) + "ms");
 	}
 	
-	private static long solution(long x) {
-		List<Long> list = new ArrayList<Long>();
-		list.add(2L);
-		list.add(3L);
-		for ( long i = 6; i<10000; i+=6) {
-			if ( isPrime(i-1)) countX(i-1, x);
-			if ( isPrime(i+1)) countX(i+1, x);
+	private static long solution(int x) {
+
+		List<Integer> primes = new ArrayList<Integer>();
+		primes.add(2);
+		primes.add(3);
+
+		for (int i = 6; i < 100; i += 6) {
+			if (isPrime(i-1)) primes.add(i-1);
+			if (isPrime(i+1)) primes.add(i+1);
 		}
-		return -1;
+		
+		return checkNumbers(x, primes);
+	}
+	
+	private static long checkNumbers(int x, List<Integer> primes) {
+
+		int limit = 2;
+		while (true) {
+			long[] ways = new long[limit + 1];
+			ways[0] = 1;
+			for (int i = 0; i < primes.size(); i++)
+				for (int j = primes.get(i); j <= limit; j++)
+					ways[j] += ways[j - primes.get(i)];
+
+			if (ways[limit] > x) return limit;
+			limit++;
+		}
 	}
 
-	private static boolean isPrime(long k) {
+	private static boolean isPrime(int k) {
 		double sqrt = Math.sqrt(k);
-		for ( int i=2; i<sqrt; i++) {
-			if ( k % i == 0 ) return false;
-		}
+		for (int i = 2; i < sqrt; i++)
+			if (k % i == 0) return false;
 		return true;
 	}
 }
